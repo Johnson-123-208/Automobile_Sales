@@ -6,7 +6,8 @@ import { loginUser, registerUser } from '@/lib/auth';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-function LoginForm() {
+// Component that uses useSearchParams - must be wrapped in Suspense
+function LoginFormContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const role = searchParams.get('role') || 'employee';
