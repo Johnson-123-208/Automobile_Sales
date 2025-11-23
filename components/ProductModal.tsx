@@ -192,11 +192,15 @@ export default function ProductModal({
                       <div className="bg-slate-700/50 rounded-lg p-4">
                         <div className="flex items-center justify-between">
                           <p className="text-slate-400">Stock Available</p>
-                          <p className={`text-xl font-bold ${(product as SparePart).stock && (product as SparePart).stock > 0 ? 'text-green-400' : 'text-red-400'}`}>
-                            {(product as SparePart).stock && (product as SparePart).stock > 0
-                              ? `${(product as SparePart).stock} units`
-                              : 'Out of Stock'}
-                          </p>
+                          {(() => {
+                            const stock = (product as SparePart).stock;
+                            const hasStock = stock != null && stock > 0;
+                            return (
+                              <p className={`text-xl font-bold ${hasStock ? 'text-green-400' : 'text-red-400'}`}>
+                                {hasStock ? `${stock} units` : 'Out of Stock'}
+                              </p>
+                            );
+                          })()}
                         </div>
                       </div>
                     </div>
