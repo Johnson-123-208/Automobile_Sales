@@ -1,0 +1,61 @@
+db_Password = Johnson@208()@()
+
+
+-- Places table
+CREATE TABLE places (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  name TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Houses/Projects table
+CREATE TABLE houses (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  title TEXT NOT NULL,
+  location TEXT NOT NULL,
+  description TEXT,
+  place_id UUID REFERENCES places(id),
+  cover_image TEXT,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Rooms table
+CREATE TABLE rooms (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  name TEXT NOT NULL,
+  house_id UUID REFERENCES houses(id),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Photos table
+CREATE TABLE photos (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  room_id UUID REFERENCES rooms(id),
+  image_url TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+### **Step 3: Project Structure**
+```
+craft-haven/
+├── app/
+│   ├── page.js              (Home page)
+│   ├── gallery/
+│   │   └── page.js          (Gallery page)
+│   ├── projects/
+│   │   └── [id]/
+│   │       └── page.js      (Project detail)
+│   ├── about/
+│   │   └── page.js          (About page)
+│   ├── contact/
+│   │   └── page.js          (Contact page)
+│   └── layout.js            (Main layout with nav)
+├── components/
+│   ├── Navigation.js
+│   ├── ProjectCard.js
+│   ├── Lightbox.js
+│   └── Footer.js
+├── lib/
+│   └── supabase.js          (Supabase client)
+└── public/
