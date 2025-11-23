@@ -100,7 +100,7 @@ export default function SparePartsPage() {
     return matchesSearch && matchesType && matchesMinPrice && matchesMaxPrice;
   });
 
-  const uniqueTypes = [...new Set(spareParts.map(sp => sp.type).filter(Boolean))];
+  const uniqueTypes = [...new Set(spareParts.map(sp => sp.type).filter((t): t is string => Boolean(t)))];
 
   if (loading) {
     return (
