@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Car, Wrench, Plus, Edit, Trash2, Menu, X, BarChart3, Package, Users, TrendingUp, LogOut, Heart, ArrowLeft } from 'lucide-react';
 import { getCurrentUser, logoutUser } from '@/lib/auth';
+import ConfirmModal from '@/components/ConfirmModal';
 import { supabase } from '@/lib/supabaseClient';
 import { User, VehicleProduct, SparePart } from '@/lib/supabaseClient';
 import { getVehicleImageUrl, getSparePartImageUrl } from '@/lib/imageUtils';
@@ -26,6 +27,7 @@ export default function AdminProducts() {
   const [selectedProductType, setSelectedProductType] = useState<'vehicle' | 'spare_part'>('vehicle');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     checkAuth();
@@ -135,10 +137,8 @@ export default function AdminProducts() {
   );
 
   const handleLogout = async () => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      await logoutUser();
-      router.push('/');
-    }
+    await logoutUser();
+    router.push('/');
   };
 
   if (loading) {
@@ -185,7 +185,7 @@ export default function AdminProducts() {
         </nav>
 
         <div className="absolute bottom-0 w-full p-4 border-t border-slate-700">
-          <button onClick={handleLogout} className="w-full flex items-center space-x-3 p-3 text-slate-300 hover:bg-slate-700 rounded-lg transition-colors">
+          <button onClick={() => setShowLogoutModal(true)} className="w-full flex items-center space-x-3 p-3 text-slate-300 hover:bg-slate-700 rounded-lg transition-colors">
             <LogOut size={20} />
             <span>Logout</span>
           </button>
@@ -413,6 +413,18 @@ export default function AdminProducts() {
             await loadSpareParts();
           }
         }}
+      />
+
+      {/* Logout Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+        onConfirm={handleLogout}
+        title="Confirm Logout"
+        message="Are you sure you want to logout? You will need to login again to access your dashboard."
+        confirmText="Logout"
+        cancelText="Cancel"
+        confirmButtonColor="from-red-600 to-red-700"
       />
     </div>
   );

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Car, Clock, Calendar, MapPin, TrendingUp, Menu, X, Package, LogOut, ArrowLeft } from 'lucide-react';
 import { getCurrentUser, logoutUser } from '@/lib/auth';
+import ConfirmModal from '@/components/ConfirmModal';
 import { supabase } from '@/lib/supabaseClient';
 import { User, Attendance } from '@/lib/supabaseClient';
 import Link from 'next/link';
@@ -16,6 +17,7 @@ export default function EmployeeAttendance() {
   const [attendanceHistory, setAttendanceHistory] = useState<Attendance[]>([]);
   const [todayAttendance, setTodayAttendance] = useState<Attendance | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     checkAuth();
@@ -138,10 +140,8 @@ export default function EmployeeAttendance() {
   };
 
   const handleAppLogout = async () => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      await logoutUser();
-      router.push('/');
-    }
+    await logoutUser();
+    router.push('/');
   };
 
   if (loading) {
@@ -336,6 +336,18 @@ export default function EmployeeAttendance() {
           </div>
         </main>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+        onConfirm={handleAppLogout}
+        title="Confirm Logout"
+        message="Are you sure you want to logout? You will need to login again to access your dashboard."
+        confirmText="Logout"
+        cancelText="Cancel"
+        confirmButtonColor="from-red-600 to-red-700"
+      />
     </div>
   );
 }

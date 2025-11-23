@@ -7,12 +7,14 @@ import { supabase } from '@/lib/supabaseClient';
 import { User } from '@/lib/supabaseClient';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import ConfirmModal from '@/components/ConfirmModal';
 
 export default function AdminDashboard() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [stats, setStats] = useState({
     totalEmployees: 0,
     totalSales: 0,
@@ -122,10 +124,8 @@ export default function AdminDashboard() {
   };
 
   const handleLogout = async () => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      await logoutUser();
-      router.push('/');
-    }
+    await logoutUser();
+    router.push('/');
   };
 
   if (loading) {
@@ -201,7 +201,7 @@ export default function AdminDashboard() {
 
         <div className="absolute bottom-0 w-full p-4 border-t border-slate-700">
           <button
-            onClick={handleLogout}
+            onClick={() => setShowLogoutModal(true)}
             className="w-full flex items-center space-x-3 p-3 text-gray-300 hover:bg-slate-700 rounded-lg transition-colors"
           >
             <LogOut size={20} />
@@ -349,6 +349,18 @@ export default function AdminDashboard() {
           </motion.div>
         </main>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+        onConfirm={handleLogout}
+        title="Confirm Logout"
+        message="Are you sure you want to logout? You will need to login again to access your dashboard."
+        confirmText="Logout"
+        cancelText="Cancel"
+        confirmButtonColor="from-red-600 to-red-700"
+      />
     </div>
   );
 }

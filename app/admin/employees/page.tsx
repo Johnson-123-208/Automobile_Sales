@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Car, Users, LogOut, Menu, X, TrendingUp, DollarSign, Calendar, BarChart3, Package, ArrowLeft } from 'lucide-react';
 import { getCurrentUser, logoutUser } from '@/lib/auth';
+import ConfirmModal from '@/components/ConfirmModal';
 import { supabase } from '@/lib/supabaseClient';
 import { User } from '@/lib/supabaseClient';
 import Link from 'next/link';
@@ -16,6 +17,7 @@ export default function AdminEmployees() {
   const [employees, setEmployees] = useState<User[]>([]);
   const [selectedEmployee, setSelectedEmployee] = useState<User | null>(null);
   const [employeeStats, setEmployeeStats] = useState<any>(null);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     checkAuth();
@@ -94,10 +96,8 @@ export default function AdminEmployees() {
   };
 
   const handleLogout = async () => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      await logoutUser();
-      router.push('/');
-    }
+    await logoutUser();
+    router.push('/');
   };
 
   if (loading) {
@@ -144,7 +144,7 @@ export default function AdminEmployees() {
         </nav>
 
         <div className="absolute bottom-0 w-full p-4 border-t border-slate-700">
-          <button onClick={handleLogout} className="w-full flex items-center space-x-3 p-3 text-slate-300 hover:bg-slate-700 rounded-lg transition-colors">
+          <button onClick={() => setShowLogoutModal(true)} className="w-full flex items-center space-x-3 p-3 text-slate-300 hover:bg-slate-700 rounded-lg transition-colors">
             <LogOut size={20} />
             <span>Logout</span>
           </button>
@@ -278,6 +278,18 @@ export default function AdminEmployees() {
           </div>
         </main>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+        onConfirm={handleLogout}
+        title="Confirm Logout"
+        message="Are you sure you want to logout? You will need to login again to access your dashboard."
+        confirmText="Logout"
+        cancelText="Cancel"
+        confirmButtonColor="from-red-600 to-red-700"
+      />
     </div>
   );
 }

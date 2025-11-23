@@ -5,6 +5,7 @@ import { Car, BarChart3, TrendingUp, DollarSign, Users, Package, Menu, X, LogOut
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { getCurrentUser, logoutUser } from '@/lib/auth';
 import { supabase } from '@/lib/supabaseClient';
+import ConfirmModal from '@/components/ConfirmModal';
 import { User } from '@/lib/supabaseClient';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -14,6 +15,7 @@ export default function AdminAnalytics() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [stats, setStats] = useState({
     totalRevenue: 0,
     totalSales: 0,
@@ -318,10 +320,8 @@ export default function AdminAnalytics() {
   };
 
   const handleLogout = async () => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      await logoutUser();
-      router.push('/');
-    }
+    await logoutUser();
+    router.push('/');
   };
 
   if (loading) {
@@ -372,7 +372,7 @@ export default function AdminAnalytics() {
         </nav>
 
         <div className="absolute bottom-0 w-full p-4 border-t border-slate-700">
-          <button onClick={handleLogout} className="w-full flex items-center space-x-3 p-3 text-slate-300 hover:bg-slate-700 rounded-lg transition-colors">
+          <button onClick={() => setShowLogoutModal(true)} className="w-full flex items-center space-x-3 p-3 text-slate-300 hover:bg-slate-700 rounded-lg transition-colors">
             <LogOut size={20} />
             <span>Logout</span>
           </button>
