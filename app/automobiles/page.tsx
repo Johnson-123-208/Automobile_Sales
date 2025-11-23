@@ -102,8 +102,8 @@ export default function AutomobilesPage() {
     return matchesSearch && matchesType && matchesBrand && matchesMinPrice && matchesMaxPrice;
   });
 
-  const uniqueTypes = [...new Set(vehicles.map(v => v.type).filter(Boolean))];
-  const uniqueBrands = [...new Set(vehicles.map(v => v.brand).filter(Boolean))];
+  const uniqueTypes = [...new Set(vehicles.map(v => v.type).filter((t): t is string => Boolean(t)))];
+  const uniqueBrands = [...new Set(vehicles.map(v => v.brand).filter((b): b is string => Boolean(b)))];
 
   if (loading) {
     return (
