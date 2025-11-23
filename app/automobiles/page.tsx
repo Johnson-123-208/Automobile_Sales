@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Car, Search, Filter, Slider, Heart } from 'lucide-react';
+import { Car, Search, Filter, Heart } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 import { VehicleProduct } from '@/lib/supabaseClient';
 import { getVehicleImageUrl } from '@/lib/imageUtils';
