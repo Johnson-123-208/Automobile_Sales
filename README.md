@@ -1,36 +1,165 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# JEN Automobiles - Automobile Sales & Spare Parts Platform
 
-## Getting Started
+A modern, full-stack Next.js application for managing automobile sales, spare parts inventory, employee attendance, sales tracking, and analytics.
 
-First, run the development server:
+## 🚗 Features
+
+### Admin Features
+- **Dashboard**: Overview of sales, employees, and performance metrics
+- **Employee Management**: View all employees with detailed stats (attendance, sales, profit)
+- **Product Management**: Add, edit, and delete vehicles and spare parts
+- **Analytics**: Comprehensive charts and graphs for sales trends, revenue breakdown, top-selling products, and employee performance
+
+### Employee Features
+- **Dashboard**: Personal KPIs, sales goals, and performance tracking
+- **Attendance System**: Daily login/logout with geolocation tracking
+- **Product Catalog**: Manage vehicles and spare parts inventory
+- **Sales Tracking**: View personal sales records and statistics
+
+### Public Features
+- **Automobiles Page**: Browse vehicles with search and filters (price, brand, type, engine)
+- **Spare Parts Page**: Browse spare parts with filters (price, vehicle type, compatibility)
+- **Favorites**: Save favorite vehicles and spare parts for quick access
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 16.0.1
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth
+- **Charts**: Recharts
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+
+## 📋 Prerequisites
+
+- Node.js 18+ and npm
+- Supabase account and project
+- Git
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Johnson-123-208/Automobile_Sales.git
+cd Automobile_Sales
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Set Up Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### 4. Set Up Database
+
+1. Go to your Supabase project dashboard
+2. Navigate to SQL Editor
+3. Run `database-schema.sql` to create all tables
+4. Run `dummy-data-production.sql` to populate with sample data (optional)
+
+### 5. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+Automobile_Sales/
+├── app/                    # Next.js app directory
+│   ├── admin/             # Admin pages (dashboard, employees, products, analytics)
+│   ├── employee/          # Employee pages (dashboard, attendance, products)
+│   ├── automobiles/       # Public vehicles page
+│   ├── spare-parts/       # Public spare parts page
+│   ├── favorites/         # User favorites page
+│   └── login/             # Authentication page
+├── components/            # React components
+├── lib/                   # Utility functions
+│   ├── supabaseClient.ts  # Supabase client configuration
+│   ├── auth.ts            # Authentication utilities
+│   ├── favorites.ts       # Favorites management
+│   └── imageUtils.ts     # Image URL generation
+├── database-schema.sql    # Database schema
+└── dummy-data-production.sql # Sample data
+```
 
-## Learn More
+## 🔐 Default Credentials
 
-To learn more about Next.js, take a look at the following resources:
+After running the dummy data script:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Admin**: 
+  - Email: `admin@test.com`
+  - Password: (set in Supabase Auth)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Employee**: 
+  - Email: `rajesh.reddy@autosalespro.com` (or any employee email from dummy data)
+  - Password: (set in Supabase Auth)
 
-## Deploy on Vercel
+## 📊 Database Tables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `users` - User accounts (admin/employee)
+- `attendance` - Employee attendance records
+- `vehicle_products` - Vehicle inventory
+- `spare_parts` - Spare parts inventory
+- `sales_records` - Sales transactions
+- `client_interactions` - Client visit tracking
+- `favorites` - User favorite products
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 Deployment
+
+### Deploy to Vercel
+
+1. Push your code to GitHub
+2. Go to [vercel.com](https://vercel.com) and import your repository
+3. Set **Root Directory** to `.` (root)
+4. Add environment variables:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+5. Click "Deploy"
+
+See `VERCEL_DEPLOYMENT_GUIDE.md` for detailed instructions.
+
+## 📝 Documentation
+
+- `VERCEL_DEPLOYMENT_GUIDE.md` - Complete Vercel deployment guide
+- `QUICK_DEPLOY.md` - Quick deployment steps
+- `DUMMY_DATA_SETUP.md` - How to set up sample data
+- `database-schema.sql` - Database schema with RLS policies
+
+## 🎨 Features Highlights
+
+- ✅ Role-based authentication (Admin/Employee)
+- ✅ Real-time attendance tracking with geolocation
+- ✅ Comprehensive analytics dashboard
+- ✅ Product catalog management
+- ✅ Sales tracking and reporting
+- ✅ Favorites system
+- ✅ Responsive design
+- ✅ Modern UI with smooth animations
+
+## 📄 License
+
+MIT License
+
+## 👤 Author
+
+Johnson-123-208
+
+---
+
+**Built with ❤️ using Next.js and Supabase**
