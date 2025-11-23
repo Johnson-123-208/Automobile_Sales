@@ -6,6 +6,9 @@ import { loginUser, registerUser } from '@/lib/auth';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
+// Force dynamic rendering to avoid static generation issues
+export const dynamic = 'force-dynamic';
+
 function LoginForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
