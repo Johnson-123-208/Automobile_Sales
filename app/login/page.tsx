@@ -235,7 +235,8 @@ function LoginForm() {
   );
 }
 
-export default function LoginPage() {
+// Wrapper component that provides Suspense boundary
+function LoginForm() {
   return (
     <Suspense 
       fallback={
@@ -244,8 +245,12 @@ export default function LoginPage() {
         </div>
       }
     >
-      <LoginForm />
+      <LoginFormContent />
     </Suspense>
   );
+}
+
+export default function LoginPage() {
+  return <LoginForm />;
 }
 
