@@ -6,9 +6,6 @@ import { loginUser, registerUser } from '@/lib/auth';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-// Force dynamic rendering to avoid static generation issues
-export const dynamic = 'force-dynamic';
-
 function LoginForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -240,11 +237,13 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950/30 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
-      </div>
-    }>
+    <Suspense 
+      fallback={
+        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950/30 to-slate-900 flex items-center justify-center">
+          <div className="text-white text-xl">Loading...</div>
+        </div>
+      }
+    >
       <LoginForm />
     </Suspense>
   );
