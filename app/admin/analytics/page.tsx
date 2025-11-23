@@ -615,6 +615,18 @@ export default function AdminAnalytics() {
           </div>
         </main>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+        onConfirm={handleLogout}
+        title="Confirm Logout"
+        message="Are you sure you want to logout? You will need to login again to access your dashboard."
+        confirmText="Logout"
+        cancelText="Cancel"
+        confirmButtonColor="from-red-600 to-red-700"
+      />
     </div>
   );
 }
